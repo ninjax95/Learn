@@ -1,0 +1,38 @@
+lxc
+
+sudo apt update
+sudo apt install lxd lxd-client
+
+sudo usermod -aG lxd $USER
+
+Mettre sa VM en mode bridge
+sudo lxd init
+Would you like to use LXD clustering? (yes/no) [default=no]:
+Do you want to configure a new storage pool? (yes/no) [default=yes]:
+Name of the new storage pool [default=default]:
+Would you like to connect to a MAAS server? (yes/no) [default=no]:
+Would you like to create a new local network bridge? (yes/no) [default=yes]:
+What should the new bridge be called? [default=lxdbr0]:
+What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]:
+What IPv6 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: none
+Would you like the LXD server to be available over the network? (yes/no) [default=no]:
+Would you like stale cached images to be updated automatically? (yes/no) [default=yes]:
+Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]:
+
+lxc image list images: | grep ubuntu/20.04
+lxc remote list
+lxc launch images:debian/12 bw
+
+Ajouter route sur FW ou sur PC hote
+
+Permet à la machine hote où est installé workstation de joindre le conteneur
+lxc network set lxdbr0 ipv4.nat false
+
+Permet suite à la commande du dessus au conteneur de joindre le net et réseau extérieur
+sudo apt install iptables
+sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+
+ping de la VM où est installée LXD non possible avec cette configuration à partir de la machine workstation 
+
+
+sudo iptables -t nat -L -v -n
