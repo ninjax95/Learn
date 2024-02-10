@@ -1,0 +1,28 @@
+Créer sa clé ssh sur le serveur cible (méthode non conseillé)
+Génération de la clé public et privée
+ssh-keygen -t rsa -b 4096
+
+Répertoire, deux fichiers
+user/.ssh./id_rsa
+user/.ssh./id_rsa.pub
+
+ssh-copy-id utilisateur@adresse_du_serveur
+
+Important vérifier ces droits
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+
+/etc/ssh/sshd_config
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+sudo systemctl restart sshd
+
+
+Copier la clé user/.ssh./id_rsa sur la machine client 
+
+Pour putty
+avec puttygen convertir la clé privé en .ppk
+
+
+
+
