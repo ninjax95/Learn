@@ -23,6 +23,12 @@ Copier la clé user/.ssh./id_rsa sur la machine client
 Pour putty
 avec puttygen convertir la clé privé en .ppk
 
+à partir de powershell
+Lis le contenu de ta clé publique :
+$publicKey = Get-Content -Path $env:USERPROFILE\.ssh\id_rsa.pub
+
+Copie de la clé publique sur le serveur
+ssh root@10.164.183.104 "echo $publicKey >> ~/.ssh/authorized_keys"
 
 
 
