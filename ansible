@@ -2,3 +2,50 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install ansible -y
 ansible --version
 
+SSH - Génération et Utilisation de la clef privée
+ssh-keygen -t ecdsa -b 521
+
+Copy de la clé sur le serveur distant
+ssh-copy-id -i /myhome/.ssh/maclefprivee login@nom_host
+
+utilisation de la clef
+ssh -i /path/clef/privee login@nom_host
+
+
+
+Facilité la connexion ssh 
+Vérifier si un agent tourne
+ps -p $SSH_AGENT_PID
+
+lancement d'un agent ssh
+eval $(ssh-agent)
+
+ajout de la clef à l'agent
+ssh-add
+
+Vérifie la clef de l'agent
+ssh-add -l
+
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+nano ~/.ssh/config
+
+Host nom_host
+    User login
+    IdentityFile /myhome/.ssh/maclefprivee
+    LogLevel INFO
+    Compression yes
+    ForwardAgent yes
+    ForwardX11 yes
+
+
+test sur machine distant Il faut que python soit installé sur la machine distant:
+sudo apt update
+sudo apt install python3
+
+ ansible -i "host," all -m ping
+ex :  ansible -i "ans1," all -m ping
+
+
+
+
