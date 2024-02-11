@@ -47,5 +47,11 @@ sudo apt install python3
 ex :  ansible -i "ans1," all -m ping
 
 
+Générer le fichier de configuration Ansible si non disponible dans /etc/ansible/ansible.cfg
+- Simple
+ansible-config init --disabled > /etc/ansible/ansible.cfg
+
+- Avec toutes les options activées
+ansible-config init --disabled -t all > /etc/ansible/ansible.cfg
 
 
