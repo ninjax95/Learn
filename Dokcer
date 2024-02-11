@@ -1,0 +1,27 @@
+Si docker est insstallé sur lxd
+Configurer le profil LXD pour Docker
+Tu dois créer ou modifier un profil LXD pour permettre à Docker de fonctionner correctement à l'intérieur d'un conteneur. Voici les étapes générales :
+
+Crée un nouveau profil LXD pour Docker ou modifie un profil existant. Si tu crées un nouveau profil, tu peux le faire avec une commande comme :
+lxc profile create dockernginx:latest
+
+
+Ajoute les configurations nécessaires au profil. Tu peux le faire en éditant le profil avec lxc profile edit docker ou en utilisant des commandes lxc profile set. Les configurations importantes incluent :
+lxc profile set docker security.nesting true
+lxc profile set docker security.privileged true
+lxc profile set docker linux.kernel_modules overlay,nf_nat
+
+Cela permet au conteneur d'exécuter d'autres conteneurs à l'intérieur (nesting), le met en mode privilégié pour lui donner plus d'accès aux ressources du système hôte, et charge les modules du noyau nécessaires pour Docker.
+
+Applique le profil à ton conteneur LXD. Si tu as un conteneur existant, tu peux lui appliquer le profil Docker en plus de ses profils existants :
+lxc profile assign <conteneur> default,docker
+Remplace <conteneur> par le nom de ton conteneur.
+
+2. Redémarre le conteneur LXD
+Après avoir configuré et appliqué le profil, redémarre ton conteneur pour que les changements prennent effet :
+
+bash
+Copy code
+lxc restart <conteneur>
+3. Vérifie et installe Docker dans le conteneur
+Une fois le conteneur correctement configuré et redémarré, tu devrais être capable d'installer et d'exécuter Docker à l'intérieur sans rencontrer l'erreur mentionnée.
